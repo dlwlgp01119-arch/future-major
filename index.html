@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Major Recommend</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 60px 10%;
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 50px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: #2563eb;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 52px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: #2563eb;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #475569;
+      margin-bottom: 30px;
+    }
+
+    .start-btn {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 15px 26px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+    }
+
+    .job-visual {
+      background: white;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+    }
+
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .job-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 22px;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .job-card .icon {
+      font-size: 42px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    section {
+      padding: 80px 10%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #64748b;
+    }
+
+    .input-box {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      background: white;
+      padding: 30px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 15px;
+    }
+
+    .flow {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .step {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 22px;
+      cursor: pointer;
+      transition: 0.3s;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .step.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .step.done {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .step h3 {
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 26px;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    .result {
+      display: none;
+      max-width: 900px;
+      margin: 50px auto 0;
+      background: white;
+      padding: 35px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-card {
+      background: #f8fafc;
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 18px;
+      border-left: 6px solid #2563eb;
+    }
+
+    .score {
+      color: #2563eb;
+      font-weight: 800;
+    }
+
+    .feedback {
+      margin-top: 25px;
+    }
+
+    .feedback button {
+      margin: 8px 8px 0 0;
+      border: none;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #1e293b;
+      color: white;
+    }
+
+    @media (max-width: 800px) {
+      .hero,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      header {
+        padding: 40px 6%;
+      }
+
+      section {
+        padding: 60px 6%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="hero">
+      <div>
+        <div class="badge">AI 기반 학과 추천 시스템</div>
+        <h1>나에게 맞는 학과를<br><span>단계별로 추천</span>받는 홈페이지</h1>
+        <p>
+          관심 분야, 좋아하는 과목, 희망 직업, 성적을 입력하면
+          학과 데이터와 비교하여 안정·적정·도전 지원 학과를 추천합니다.
+        </p>
+        <button class="start-btn" onclick="scrollToSystem()">추천 시작하기</button>
+      </div>
+
+      <div class="job-visual">
+        <div class="job-grid">
+          <div class="job-card"><span class="icon">👩‍⚕️</span>의료·보건</div>
+          <div class="job-card"><span class="icon">👨‍🏫</span>교육</div>
+          <div class="job-card"><span class="icon">👩‍💻</span>IT·코딩</div>
+          <div class="job-card"><span class="icon">🎨</span>디자인</div>
+          <div class="job-card"><span class="icon">🔬</span>연구</div>
+          <div class="job-card"><span class="icon">⚙️</span>공학</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="system">
+    <div class="section-title">
+      <h2>Major Recommend 알고리즘</h2>
+      <p>각 단계를 클릭해야 다음 단계로 넘어갑니다.</p>
+    </div>
+
+    <div class="input-box">
+      <div class="form-grid">
+        <div>
+          <label>관심 분야</label>
+          <input id="interest" placeholder="예: 생명, 식품, 코딩, 교육, 디자인">
+        </div>
+        <div>
+          <label>좋아하는 과목</label>
+          <input id="subject" placeholder="예: 생명과학, 화학, 수학, 미술">
+        </div>
+        <div>
+          <label>희망 직업</label>
+          <input id="job" placeholder="예: 약사, 개발자, 교사, 디자이너">
+        </div>
+        <div>
+          <label>성적 등급</label>
+          <select id="grade">
+            <option value="">선택하기</option>
+            <option value="1">1등급</option>
+            <option value="2">2등급</option>
+            <option value="3">3등급</option>
+            <option value="4">4등급</option>
+            <option value="5">5등급 이하</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="step open" onclick="completeStep(0)">
+        <h3>1. 사용자 정보 입력</h3>
+        <p>관심 분야, 좋아하는 과목, 희망 직업, 성적을 입력합니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(1)">
+        <h3>2. 입력 데이터 저장</h3>
+        <p>입력한 정보를 추천 시스템 내부에 저장합니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(2)">
+        <h3>3. 관심 키워드 추출</h3>
+        <p>입력 내용에서 생명, 식품, 코딩, 교육, 디자인 같은 핵심 키워드를 찾습니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(3)">
+        <h3>4. 학과 데이터와 비교</h3>
+        <p>학과별 배우는 과목, 관련 직업, 취업 분야, 입시 성적과 비교합니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(4)">
+        <h3>5. 적합도 점수 계산</h3>
+        <p>관심도 점수와 성적 기준 점수를 합산하여 종합 적합도를 계산합니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(5)">
+        <h3>6. 학과 추천 등급 분류</h3>
+        <p>안정 지원, 적정 지원, 도전 지원 학과로 나누어 추천합니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(6)">
+        <h3>7. 추천 결과 출력</h3>
+        <p>추천 학과, 추천 이유, 관련 직업, 준비 방법을 보여줍니다.</p>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" onclick="completeStep(7)">
+        <h3>8. 사용자 피드백 입력</h3>
+        <p>만족, 보통, 불만족 피드백을 통해 추천 기준을 개선합니다.</p>
+      </div>
+    </div>
+
+    <div id="result" class="result">
+      <h2>추천 결과</h2>
+
+      <div class="result-card">
+        <h3>안정 지원 학과: <span id="safeMajor">식품영양학과</span></h3>
+        <p class="score">적합도 88%</p>
+        <p>입력한 관심사와 성적을 기준으로 안정적으로 지원 가능한 학과입니다.</p>
+      </div>
+
+      <div class="result-card">
+        <h3>적정 지원 학과: <span id="matchMajor">생명공학과</span></h3>
+        <p class="score">적합도 92%</p>
+        <p>관심 키워드와 관련 직업이 가장 잘 연결되는 학과입니다.</p>
+      </div>
+
+      <div class="result-card">
+        <h3>도전 지원 학과: <span id="challengeMajor">약학과</span></h3>
+        <p class="score">적합도 84%</p>
+        <p>성적 기준은 높지만 희망 직업과 관련성이 높은 학과입니다.</p>
+      </div>
+
+      <div class="result-card">
+        <h3>추천 이유</h3>
+        <p id="reason">생명, 화학, 식품, 보건 분야와 관련된 관심사가 나타났기 때문입니다.</p>
+      </div>
+
+      <div class="result-card">
+        <h3>관련 직업</h3>
+        <p id="relatedJobs">식품연구원, 약사, 품질관리 전문가, 보건 분야 연구원</p>
+      </div>
+
+      <div class="result-card">
+        <h3>준비 방법</h3>
+        <p>관련 과목 심화 학습, 탐구 보고서 작성, 전공 관련 동아리 활동, 학과별 입시 정보 조사</p>
+      </div>
+
+      <div class="feedback">
+        <h3>추천 결과가 만족스러웠나요?</h3>
+        <button onclick="feedback('만족')">만족</button>
+        <button onclick="feedback('보통')">보통</button>
+        <button onclick="feedback('불만족')">불만족</button>
+        <p id="feedbackText"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Major Recommend | AI 기반 맞춤형 학과 추천 시스템</p>
+  </footer>
+
+  <script>
+    let currentStep = 0;
+    const steps = document.querySelectorAll(".step");
+
+    function scrollToSystem() {
+      document.getElementById("system").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function completeStep(index) {
+      if (index !== currentStep) {
+        alert("현재 열린 단계부터 차례대로 클릭해야 합니다.");
+        return;
+      }
+
+      if (index === 0) {
+        const interest = document.getElementById("interest").value;
+        const subject = document.getElementById("subject").value;
+        const job = document.getElementById("job").value;
+        const grade = document.getElementById("grade").value;
+
+        if (!interest || !subject || !job || !grade) {
+          alert("사용자 정보를 모두 입력한 뒤 1단계를 클릭해주세요.");
+          return;
+        }
+      }
+
+      steps[index].classList.add("done");
+
+      if (index + 1 < steps.length) {
+        steps[index + 1].classList.add("open");
+        currentStep++;
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const interest = document.getElementById("interest").value;
+      const subject = document.getElementById("subject").value;
+      const job = document.getElementById("job").value;
+
+      const text = interest + " " + subject + " " + job;
+
+      if (text.includes("코딩") || text.includes("컴퓨터") || text.includes("개발")) {
+        document.getElementById("safeMajor").innerText = "정보통신공학과";
+        document.getElementById("matchMajor").innerText = "컴퓨터공학과";
+        document.getElementById("challengeMajor").innerText = "인공지능학과";
+        document.getElementById("reason").innerText = "코딩, 컴퓨터, 개발 관련 키워드가 나타났기 때문입니다.";
+        document.getElementById("relatedJobs").innerText = "개발자, 데이터 분석가, 인공지능 연구원, 보안 전문가";
+      } else if (text.includes("교육") || text.includes("교사") || text.includes("선생님")) {
+        document.getElementById("safeMajor").innerText = "교육학과";
+        document.getElementById("matchMajor").innerText = "기술교육과";
+        document.getElementById("challengeMajor").innerText = "사범대학 관련 학과";
+        document.getElementById("reason").innerText = "교육과 교사 관련 관심이 높게 나타났기 때문입니다.";
+        document.getElementById("relatedJobs").innerText = "교사, 교육 연구원, 교육 콘텐츠 개발자";
+      } else if (text.includes("디자인") || text.includes("미술")) {
+        document.getElementById("safeMajor").innerText = "시각디자인학과";
+        document.getElementById("matchMajor").innerText = "산업디자인학과";
+        document.getElementById("challengeMajor").innerText = "디지털미디어디자인학과";
+        document.getElementById("reason").innerText = "디자인과 미술 관련 키워드가 나타났기 때문입니다.";
+        document.getElementById("relatedJobs").innerText = "디자이너, UX/UI 기획자, 콘텐츠 제작자";
+      } else {
+        document.getElementById("safeMajor").innerText = "식품영양학과";
+        document.getElementById("matchMajor").innerText = "생명공학과";
+        document.getElementById("challengeMajor").innerText = "약학과";
+        document.getElementById("reason").innerText = "생명, 화학, 식품, 보건 분야와 관련된 관심사가 나타났기 때문입니다.";
+        document.getElementById("relatedJobs").innerText = "식품연구원, 약사, 품질관리 전문가, 보건 분야 연구원";
+      }
+
+      document.getElementById("result").classList.add("show");
+      document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function feedback(value) {
+      document.getElementById("feedbackText").innerText =
+        value + " 피드백이 저장되었습니다. 이 피드백은 추천 기준 개선에 활용됩니다.";
+    }
+  </script>
+</body>
+</html>
