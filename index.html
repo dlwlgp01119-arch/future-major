@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Major Recommend</title>
+  <title>진로설계상담</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
@@ -20,9 +16,7 @@
       word-break: keep-all;
     }
 
-    button, input, select {
-      font-family: inherit;
-    }
+    button, input, select { font-family: inherit; }
 
     .hero {
       min-height: 100vh;
@@ -46,15 +40,13 @@
     }
 
     h1 {
-      font-size: clamp(40px, 5vw, 64px);
+      font-size: clamp(42px, 5vw, 66px);
       line-height: 1.22;
       letter-spacing: -1.5px;
       margin-bottom: 24px;
     }
 
-    h1 span {
-      color: #2563eb;
-    }
+    h1 span { color: #2563eb; }
 
     .hero p {
       font-size: 18px;
@@ -64,15 +56,19 @@
       line-height: 1.85;
     }
 
-    .primary-btn {
+    .primary-btn, .next-btn {
       border: 0;
       background: #2563eb;
       color: white;
-      padding: 15px 28px;
+      padding: 14px 24px;
       border-radius: 14px;
       font-size: 16px;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .primary-btn {
+      padding: 15px 28px;
       box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
     }
 
@@ -83,7 +79,7 @@
       box-shadow: 0 22px 55px rgba(15, 23, 42, 0.12);
     }
 
-    .job-grid {
+    .job-grid, .diff-grid, .card-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 18px;
@@ -104,8 +100,11 @@
       margin-bottom: 8px;
     }
 
-    .difference {
+    .difference, .app {
       padding: 80px 9%;
+    }
+
+    .difference {
       background: white;
     }
 
@@ -125,12 +124,10 @@
     }
 
     .diff-grid {
-      display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
     }
 
-    .diff-card {
+    .diff-card, .info-card, .box, .route {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 22px;
@@ -143,14 +140,10 @@
       margin-bottom: 10px;
     }
 
-    .diff-card p {
-      color: #64748b;
-      line-height: 1.8;
+    .diff-card p, .info-card p, .route p {
+      color: #52617a;
+      line-height: 1.75;
       font-size: 15px;
-    }
-
-    .app {
-      padding: 80px 9%;
     }
 
     .progress-wrap {
@@ -195,18 +188,6 @@
 
     .screen.active {
       display: block;
-      animation: fade 0.25s ease;
-    }
-
-    @keyframes fade {
-      from {
-        opacity: 0.3;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .step-badge {
@@ -253,10 +234,6 @@
     }
 
     .box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 22px;
-      padding: 24px;
       margin-top: 18px;
     }
 
@@ -281,33 +258,20 @@
     }
 
     .card-grid {
-      display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
     }
 
     .info-card {
       background: white;
-      border: 1px solid #dbe3ee;
-      border-radius: 20px;
-      padding: 20px;
     }
 
-    .info-card h4 {
+    .info-card h4, .route h4 {
       font-size: 20px;
-      margin-bottom: 8px;
-    }
-
-    .info-card p {
-      color: #52617a;
-      line-height: 1.75;
-      font-size: 15px;
+      margin-bottom: 10px;
     }
 
     .tag {
       display: inline-block;
-      background: #fef3c7;
-      color: #92400e;
       padding: 5px 9px;
       border-radius: 999px;
       font-weight: 900;
@@ -315,20 +279,10 @@
       margin-bottom: 10px;
     }
 
-    .blue-tag {
-      background: #dbeafe;
-      color: #1d4ed8;
-    }
-
-    .green-tag {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .red-tag {
-      background: #fee2e2;
-      color: #991b1b;
-    }
+    .blue-tag { background: #dbeafe; color: #1d4ed8; }
+    .green-tag { background: #dcfce7; color: #166534; }
+    .red-tag { background: #fee2e2; color: #991b1b; }
+    .yellow-tag { background: #fef3c7; color: #92400e; }
 
     .bar {
       height: 11px;
@@ -348,9 +302,6 @@
 
     .route {
       background: white;
-      border: 1px solid #dbe3ee;
-      border-radius: 20px;
-      padding: 20px;
       margin-bottom: 16px;
     }
 
@@ -359,7 +310,7 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
       font-weight: 800;
     }
 
@@ -392,14 +343,17 @@
       cursor: pointer;
     }
 
-    .next-btn {
+    .print-btn {
+      width: 100%;
+      margin-top: 25px;
       border: 0;
-      background: #2563eb;
+      background: #172033;
       color: white;
-      padding: 13px 22px;
-      border-radius: 13px;
+      padding: 15px 20px;
+      border-radius: 14px;
       font-weight: 900;
       cursor: pointer;
+      font-size: 16px;
     }
 
     .feedbacks {
@@ -433,6 +387,30 @@
       margin-top: 50px;
     }
 
+    @media print {
+      .hero, .difference, .progress-wrap, .nav-btns, .feedbacks, footer, .print-btn {
+        display: none !important;
+      }
+
+      .app {
+        padding: 20px;
+      }
+
+      .screen {
+        display: none !important;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .screen.print-target {
+        display: block !important;
+      }
+
+      body {
+        background: white;
+      }
+    }
+
     @media(max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
@@ -440,19 +418,11 @@
         padding: 55px 6%;
       }
 
-      .hero p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .difference,
-      .app {
+      .difference, .app {
         padding: 55px 6%;
       }
 
-      .diff-grid,
-      .form-grid,
-      .card-grid {
+      .diff-grid, .form-grid, .card-grid, .job-grid {
         grid-template-columns: 1fr;
       }
 
@@ -469,14 +439,13 @@
       <div class="badge">AI 기반 진로 설계 플랫폼</div>
 
       <h1>
-        결과만 알려주는 진로검사가 아닌<br>
-        <span>진로 루트까지 설계하는</span><br>
-        학과 추천 시스템
+        진로설계상담<br>
+        <span>학과 추천부터 진로 루트까지</span>
       </h1>
 
       <p>
-        Major Recommend는 관심사와 성적을 바탕으로 학과를 추천하는 데서 끝나지 않습니다.
-        희망 학과가 어려울 경우 대체 학과, 편입 경로, 연결 직업, 진로 로드맵까지 제안합니다.
+        관심사, 성적, 희망 직업을 바탕으로 학과를 추천하고,
+        희망 학과가 어려울 경우 편입·우회 경로와 연결 직업까지 제안합니다.
       </p>
 
       <button class="primary-btn" onclick="startApp()">추천 시작하기</button>
@@ -503,30 +472,27 @@
     <div class="diff-grid">
       <div class="diff-card">
         <h3>01. 추천 이유 설명</h3>
-        <p>왜 이 학과가 추천되었는지 관심 키워드와 학과 정보를 연결해 보여줍니다.</p>
+        <p>학과가 추천된 이유를 문장형으로 설명합니다.</p>
       </div>
-
       <div class="diff-card">
         <h3>02. 숨은 학과 발견</h3>
         <p>학생이 몰랐을 수 있는 관련 학과를 함께 제안합니다.</p>
       </div>
-
       <div class="diff-card">
         <h3>03. 편입·우회 경로</h3>
-        <p>희망 학과가 어려울 경우 관련 학과를 통한 진학 루트를 제안합니다.</p>
+        <p>희망 학과가 어렵더라도 포기하지 않도록 대체 경로를 제시합니다.</p>
       </div>
-
       <div class="diff-card">
-        <h3>04. 진로 로드맵</h3>
-        <p>학과 선택 이후 가능한 직업과 준비 과정을 단계별로 보여줍니다.</p>
+        <h3>04. 결과지 출력</h3>
+        <p>상담 결과를 출력하여 진로 상담 자료로 활용할 수 있습니다.</p>
       </div>
     </div>
   </section>
 
   <section class="app" id="app">
     <div class="section-title">
-      <h2>Major Recommend 실행하기</h2>
-      <p>입력한 정보를 바탕으로 AI 추천 과정이 단계별로 진행됩니다.</p>
+      <h2>진로설계상담 실행하기</h2>
+      <p>입력란은 비워도 진행 가능하며, 입력값이 없을 경우 기본 추천 기준으로 분석됩니다.</p>
     </div>
 
     <div class="progress-wrap">
@@ -539,7 +505,7 @@
     <section class="screen active">
       <span class="step-badge">STEP 1</span>
       <h3>사용자 정보 입력</h3>
-      <p class="desc">관심 분야, 좋아하는 과목, 희망 직업, 현재 성적, 가고 싶은 학과를 입력합니다.</p>
+      <p class="desc">입력하지 않아도 다음 단계로 넘어갈 수 있습니다.</p>
 
       <div class="form-grid">
         <div>
@@ -565,7 +531,7 @@
         <div>
           <label>현재 성적 등급</label>
           <select id="grade">
-            <option value="">선택하기</option>
+            <option value="">선택하지 않음</option>
             <option value="1">1등급</option>
             <option value="2">2등급</option>
             <option value="3">3등급</option>
@@ -584,14 +550,12 @@
     <section class="screen">
       <span class="step-badge">STEP 2</span>
       <h3>AI 입력 데이터 분석</h3>
-      <p class="desc">입력한 정보를 저장하고 추천에 필요한 핵심 키워드를 추출합니다.</p>
-
+      <p class="desc">입력 정보를 저장하고 핵심 키워드를 추출합니다.</p>
       <div class="box" id="savedData"></div>
       <div class="box">
         <div class="mini-title">추출된 관심 키워드</div>
         <div class="chips" id="keywordChips"></div>
       </div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">학과 데이터와 비교</button>
@@ -601,12 +565,10 @@
     <section class="screen">
       <span class="step-badge">STEP 3</span>
       <h3>학과 데이터와 비교</h3>
-      <p class="desc">학과별 배우는 과목, 관련 직업, 취업 분야, 입시 성적을 비교합니다.</p>
-
+      <p class="desc">학과별 과목, 직업, 성적 기준과 비교합니다.</p>
       <div class="box">
         <div class="card-grid" id="compareList"></div>
       </div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">적합도 계산</button>
@@ -615,11 +577,9 @@
 
     <section class="screen">
       <span class="step-badge">STEP 4</span>
-      <h3>관심도와 성적 기준 점수 계산</h3>
-      <p class="desc">관심 키워드 점수와 성적 기준 점수를 합산하여 종합 적합도를 계산합니다.</p>
-
+      <h3>적합도 점수 계산</h3>
+      <p class="desc">관심도 점수와 성적 기준 점수를 함께 계산합니다.</p>
       <div class="box" id="scoreBox"></div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">추천 학과 보기</button>
@@ -628,13 +588,11 @@
 
     <section class="screen">
       <span class="step-badge">STEP 5</span>
-      <h3>추천 학과 결과</h3>
-      <p class="desc">안정 지원, 적정 지원, 도전 지원 학과를 분류합니다.</p>
-
+      <h3>학과 추천 결과</h3>
+      <p class="desc">안정 지원, 적정 지원, 도전 지원 학과를 중복 없이 분류합니다.</p>
       <div class="box">
         <div class="card-grid" id="recommendCards"></div>
       </div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">숨은 학과 보기</button>
@@ -644,12 +602,10 @@
     <section class="screen">
       <span class="step-badge">STEP 6</span>
       <h3>이런 학과도 있어요</h3>
-      <p class="desc">사용자가 몰랐을 수 있지만 관심사와 연결되는 학과를 추가로 추천합니다.</p>
-
+      <p class="desc">사용자가 몰랐을 수 있는 관련 학과를 추가로 추천합니다.</p>
       <div class="box">
         <div class="card-grid" id="hiddenMajors"></div>
       </div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">희망 학과 가능성 보기</button>
@@ -659,10 +615,8 @@
     <section class="screen">
       <span class="step-badge">STEP 7</span>
       <h3>희망 학과 가능성 분석</h3>
-      <p class="desc">가고 싶은 학과와 현재 성적을 비교해 지원 가능성을 분석합니다.</p>
-
+      <p class="desc">가고 싶은 학과와 현재 성적을 비교합니다.</p>
       <div class="box" id="dreamAnalysis"></div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">편입·우회 경로 보기</button>
@@ -671,11 +625,9 @@
 
     <section class="screen">
       <span class="step-badge">STEP 8</span>
-      <h3>편입·우회 진학 경로</h3>
-      <p class="desc">희망 학과가 어렵더라도 포기하지 않도록 관련 학과를 통한 경로를 제안합니다.</p>
-
+      <h3>체계적인 편입·우회 진학 경로</h3>
+      <p class="desc">희망 학과가 어렵더라도 단계별 준비 경로를 확인할 수 있습니다.</p>
       <div class="box" id="routeBox"></div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">진로 로드맵 보기</button>
@@ -685,22 +637,22 @@
     <section class="screen">
       <span class="step-badge">STEP 9</span>
       <h3>진로 로드맵</h3>
-      <p class="desc">추천 학과를 선택했을 때 이어질 수 있는 학년별 준비 과정과 직업 루트를 보여줍니다.</p>
-
+      <p class="desc">추천 학과를 선택했을 때 이어질 수 있는 준비 과정과 직업 루트를 보여줍니다.</p>
       <div class="box" id="roadmapBox"></div>
-
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
         <button class="next-btn" onclick="nextStep()">최종 결과 보기</button>
       </div>
     </section>
 
-    <section class="screen">
+    <section class="screen" id="finalScreen">
       <span class="step-badge">STEP 10</span>
       <h3>최종 결과 및 피드백</h3>
-      <p class="desc">추천 학과, 숨은 학과, 희망 학과 경로, 연결 직업을 종합적으로 확인합니다.</p>
+      <p class="desc">상담 결과를 확인하고 결과지를 출력할 수 있습니다.</p>
 
       <div class="box" id="finalResult"></div>
+
+      <button class="print-btn" onclick="printResult()">결과지 출력하기</button>
 
       <div class="feedbacks">
         <button onclick="saveFeedback('만족')">만족</button>
@@ -712,13 +664,13 @@
 
       <div class="nav-btns">
         <button class="ghost-btn" onclick="prevStep()">이전</button>
-        <button class="next-btn" onclick="restart()">처음부터 다시 추천</button>
+        <button class="next-btn" onclick="restart()">처음부터 다시 시작</button>
       </div>
     </section>
   </section>
 
   <footer>
-    Major Recommend | AI 기반 진로 설계 플랫폼
+    진로설계상담 | AI 기반 진로 설계 플랫폼
   </footer>
 
   <script>
@@ -731,7 +683,7 @@
       "AI 입력 데이터 분석",
       "학과 데이터와 비교",
       "적합도 점수 계산",
-      "추천 학과 결과",
+      "학과 추천 결과",
       "숨은 학과 발견",
       "희망 학과 가능성 분석",
       "편입·우회 진학 경로",
@@ -743,78 +695,15 @@
     let analysis = {};
 
     const departments = [
-      {
-        name: "약학과",
-        field: ["생명", "화학", "보건", "약사", "제약"],
-        jobs: "약사, 제약 연구원, 신약 개발 연구원",
-        cut: 1,
-        hidden: false,
-        roadmap: ["화학·생명 기초 학습", "약학 관련 탐구", "실험·연구 경험", "약사 또는 제약 연구 분야"]
-      },
-      {
-        name: "생명공학과",
-        field: ["생명", "화학", "연구", "식품", "바이오"],
-        jobs: "바이오 연구원, 생명과학 연구원, 제약 연구원",
-        cut: 2,
-        hidden: false,
-        roadmap: ["생명과학 기초", "실험 수업·연구실 경험", "바이오 인턴·탐구", "바이오·제약 연구 분야"]
-      },
-      {
-        name: "식품영양학과",
-        field: ["식품", "생명", "화학", "보건", "영양"],
-        jobs: "영양사, 식품연구원, 품질관리 전문가",
-        cut: 3,
-        hidden: false,
-        roadmap: ["식품·영양 기초", "식품 분석 실험", "품질관리·영양 관련 실습", "식품 연구·보건 분야"]
-      },
-      {
-        name: "화학공학과",
-        field: ["화학", "공학", "제약", "소재", "연구"],
-        jobs: "화학 공정 엔지니어, 제약 생산관리, 소재 연구원",
-        cut: 2,
-        hidden: true,
-        roadmap: ["화학·수학 기초", "공정·실험 과목", "제약·소재 인턴", "제약 공정·연구 개발"]
-      },
-      {
-        name: "의생명공학과",
-        field: ["생명", "의료", "보건", "바이오", "연구"],
-        jobs: "의생명 연구원, 의료기기 연구원, 바이오 연구원",
-        cut: 2,
-        hidden: true,
-        roadmap: ["생명·의학 기초", "바이오 실험", "의료 데이터·연구 경험", "의생명 연구 분야"]
-      },
-      {
-        name: "컴퓨터공학과",
-        field: ["코딩", "컴퓨터", "개발", "수학", "AI"],
-        jobs: "개발자, 데이터 분석가, 인공지능 연구원",
-        cut: 2,
-        hidden: false,
-        roadmap: ["프로그래밍 기초", "프로젝트 제작", "인턴·포트폴리오", "개발자·AI 분야"]
-      },
-      {
-        name: "기술교육과",
-        field: ["교육", "교사", "공학", "기술", "수업"],
-        jobs: "기술교사, 교육 콘텐츠 개발자, 진로교육 전문가",
-        cut: 3,
-        hidden: false,
-        roadmap: ["교육학·기술 기초", "수업 설계", "교생 실습", "기술교사·교육 분야"]
-      },
-      {
-        name: "산업디자인학과",
-        field: ["디자인", "미술", "창의", "기획", "제품"],
-        jobs: "제품 디자이너, UX/UI 기획자, 콘텐츠 디자이너",
-        cut: 3,
-        hidden: false,
-        roadmap: ["디자인 기초", "포트폴리오 제작", "공모전·프로젝트", "디자이너·기획자"]
-      },
-      {
-        name: "바이오융합학과",
-        field: ["생명", "바이오", "식품", "데이터", "연구"],
-        jobs: "바이오 데이터 분석가, 융합 연구원, 헬스케어 기획자",
-        cut: 3,
-        hidden: true,
-        roadmap: ["생명과학 기초", "데이터·바이오 융합", "헬스케어 프로젝트", "바이오 융합 분야"]
-      }
+      { name: "약학과", field: ["생명", "화학", "보건", "약사", "제약"], jobs: "약사, 제약 연구원, 신약 개발 연구원", cut: 1, hidden: false, roadmap: ["화학·생명 기초 학습", "약학 관련 탐구", "실험·연구 경험", "약사 또는 제약 연구 분야"] },
+      { name: "생명공학과", field: ["생명", "화학", "연구", "식품", "바이오"], jobs: "바이오 연구원, 생명과학 연구원, 제약 연구원", cut: 2, hidden: false, roadmap: ["생명과학 기초", "실험 수업·연구실 경험", "바이오 인턴·탐구", "바이오·제약 연구 분야"] },
+      { name: "식품영양학과", field: ["식품", "생명", "화학", "보건", "영양"], jobs: "영양사, 식품연구원, 품질관리 전문가", cut: 3, hidden: false, roadmap: ["식품·영양 기초", "식품 분석 실험", "품질관리·영양 관련 실습", "식품 연구·보건 분야"] },
+      { name: "화학공학과", field: ["화학", "공학", "제약", "소재", "연구"], jobs: "화학 공정 엔지니어, 제약 생산관리, 소재 연구원", cut: 2, hidden: true, roadmap: ["화학·수학 기초", "공정·실험 과목", "제약·소재 인턴", "제약 공정·연구 개발"] },
+      { name: "의생명공학과", field: ["생명", "의료", "보건", "바이오", "연구"], jobs: "의생명 연구원, 의료기기 연구원, 바이오 연구원", cut: 2, hidden: true, roadmap: ["생명·의학 기초", "바이오 실험", "의료 데이터·연구 경험", "의생명 연구 분야"] },
+      { name: "컴퓨터공학과", field: ["코딩", "컴퓨터", "개발", "수학", "AI"], jobs: "개발자, 데이터 분석가, 인공지능 연구원", cut: 2, hidden: false, roadmap: ["프로그래밍 기초", "프로젝트 제작", "인턴·포트폴리오", "개발자·AI 분야"] },
+      { name: "기술교육과", field: ["교육", "교사", "공학", "기술", "수업"], jobs: "기술교사, 교육 콘텐츠 개발자, 진로교육 전문가", cut: 3, hidden: false, roadmap: ["교육학·기술 기초", "수업 설계", "교생 실습", "기술교사·교육 분야"] },
+      { name: "산업디자인학과", field: ["디자인", "미술", "창의", "기획", "제품"], jobs: "제품 디자이너, UX/UI 기획자, 콘텐츠 디자이너", cut: 3, hidden: false, roadmap: ["디자인 기초", "포트폴리오 제작", "공모전·프로젝트", "디자이너·기획자"] },
+      { name: "바이오융합학과", field: ["생명", "바이오", "식품", "데이터", "연구"], jobs: "바이오 데이터 분석가, 융합 연구원, 헬스케어 기획자", cut: 3, hidden: true, roadmap: ["생명과학 기초", "데이터·바이오 융합", "헬스케어 프로젝트", "바이오 융합 분야"] }
     ];
 
     function startApp() {
@@ -831,16 +720,11 @@
     }
 
     function collectInput() {
-      const interest = document.getElementById("interest").value.trim();
-      const subject = document.getElementById("subject").value.trim();
-      const job = document.getElementById("job").value.trim();
-      const dreamMajor = document.getElementById("dreamMajor").value.trim();
-      const grade = document.getElementById("grade").value;
-
-      if (!interest || !subject || !job || !dreamMajor || !grade) {
-        alert("모든 입력란을 채워주세요.");
-        return false;
-      }
+      const interest = document.getElementById("interest").value.trim() || "진로 탐색";
+      const subject = document.getElementById("subject").value.trim() || "관심 과목 미정";
+      const job = document.getElementById("job").value.trim() || "희망 직업 미정";
+      const dreamMajor = document.getElementById("dreamMajor").value.trim() || "희망 학과 미정";
+      const grade = document.getElementById("grade").value || "3";
 
       analysis.input = {
         interest,
@@ -856,16 +740,12 @@
     function makeAnalysis() {
       const text = `${analysis.input.interest} ${analysis.input.subject} ${analysis.input.job} ${analysis.input.dreamMajor}`;
 
-      const possibleKeywords = [
-        "생명", "식품", "코딩", "교육", "디자인", "화학", "수학",
-        "보건", "약사", "교사", "개발", "컴퓨터", "미술", "공학",
-        "연구", "제약", "바이오", "의료", "AI", "영양"
-      ];
+      const possibleKeywords = ["생명", "식품", "코딩", "교육", "디자인", "화학", "수학", "보건", "약사", "교사", "개발", "컴퓨터", "미술", "공학", "연구", "제약", "바이오", "의료", "AI", "영양"];
 
       let keywords = possibleKeywords.filter(keyword => text.includes(keyword));
 
       if (keywords.length === 0) {
-        keywords = [analysis.input.interest, analysis.input.subject, analysis.input.job];
+        keywords = ["진로 탐색", "학과 비교", "직업 연결"];
       }
 
       analysis.keywords = keywords;
@@ -878,42 +758,33 @@
         );
 
         const dreamBonus = analysis.input.dreamMajor.includes(department.name.replace("과", "")) ? 15 : 0;
-
         const interestScore = Math.min(100, 50 + matched.length * 13 + dreamBonus);
-
         const gradeGap = analysis.input.grade - department.cut;
 
         let gradeScore;
 
-        if (gradeGap <= -1) {
-          gradeScore = 96;
-        } else if (gradeGap === 0) {
-          gradeScore = 88;
-        } else if (gradeGap === 1) {
-          gradeScore = 75;
-        } else if (gradeGap === 2) {
-          gradeScore = 62;
-        } else {
-          gradeScore = 50;
-        }
+        if (gradeGap <= -1) gradeScore = 96;
+        else if (gradeGap === 0) gradeScore = 88;
+        else if (gradeGap === 1) gradeScore = 75;
+        else if (gradeGap === 2) gradeScore = 62;
+        else gradeScore = 50;
 
         const total = Math.round(interestScore * 0.62 + gradeScore * 0.38);
 
-        return {
-          ...department,
-          matched,
-          interestScore,
-          gradeScore,
-          total,
-          gradeGap
-        };
+        return { ...department, matched, interestScore, gradeScore, total, gradeGap };
       }).sort((a, b) => b.total - a.total);
 
-      analysis.match = analysis.results[0];
-      analysis.safe = analysis.results.find(d => analysis.input.grade <= d.cut + 1) || analysis.results[2];
-      analysis.challenge = analysis.results.find(d => analysis.input.grade > d.cut) || analysis.results[0];
+      const selected = [];
 
-      analysis.hidden = analysis.results.filter(d => d.hidden).slice(0, 3);
+      analysis.match = analysis.results[0];
+      selected.push(analysis.match.name);
+
+      analysis.safe = analysis.results.find(d => analysis.input.grade <= d.cut + 1 && !selected.includes(d.name)) || analysis.results.find(d => !selected.includes(d.name));
+      selected.push(analysis.safe.name);
+
+      analysis.challenge = analysis.results.find(d => analysis.input.grade > d.cut && !selected.includes(d.name)) || analysis.results.find(d => !selected.includes(d.name));
+
+      analysis.hidden = analysis.results.filter(d => d.hidden && !selected.includes(d.name)).slice(0, 3);
 
       analysis.dream =
         departments.find(d => analysis.input.dreamMajor.includes(d.name.replace("과", "")))
@@ -926,38 +797,32 @@
         renderSavedData();
         renderKeywords();
       }
+      if (step === 2) renderCompareList();
+      if (step === 3) renderScores();
+      if (step === 4) renderRecommendCards();
+      if (step === 5) renderHiddenMajors();
+      if (step === 6) renderDreamAnalysis();
+      if (step === 7) renderRoutes();
+      if (step === 8) renderRoadmap();
+      if (step === 9) renderFinalResult();
+    }
 
-      if (step === 2) {
-        renderCompareList();
+    function makeReason(department, type) {
+      const input = analysis.input;
+
+      if (type === "안정 지원") {
+        return `${department.name}은 현재 성적 기준에서 비교적 안정적으로 접근할 수 있는 학과입니다. 또한 ${department.jobs}와 같은 직업으로 연결될 수 있어, 진로를 구체화하는 데 도움이 됩니다.`;
       }
 
-      if (step === 3) {
-        renderScores();
+      if (type === "적정 지원" || type === "추천 학과") {
+        return `${department.name}은 입력한 관심 분야와 희망 직업이 학과의 주요 학습 내용과 잘 연결됩니다. 특히 ${department.jobs} 분야로 확장될 수 있어 현재 진로 방향과 가장 잘 맞는 학과로 분석되었습니다.`;
       }
 
-      if (step === 4) {
-        renderRecommendCards();
+      if (type === "도전 지원") {
+        return `${department.name}은 현재 성적 기준에서는 다소 도전적인 학과입니다. 하지만 희망 직업과의 관련성이 높기 때문에 성적 향상이나 관련 활동을 보완한다면 목표 학과로 설정해볼 수 있습니다.`;
       }
 
-      if (step === 5) {
-        renderHiddenMajors();
-      }
-
-      if (step === 6) {
-        renderDreamAnalysis();
-      }
-
-      if (step === 7) {
-        renderRoutes();
-      }
-
-      if (step === 8) {
-        renderRoadmap();
-      }
-
-      if (step === 9) {
-        renderFinalResult();
-      }
+      return `${department.name}은 사용자의 관심사와 진로 방향을 함께 고려했을 때 관련성이 있는 학과입니다.`;
     }
 
     function renderSavedData() {
@@ -984,7 +849,7 @@
           <div class="info-card">
             <h4>${department.name}</h4>
             <p><b>관련 직업</b><br>${department.jobs}</p>
-            <p><b>연결 키워드</b><br>${department.matched.join(", ") || "일부 관련"}</p>
+            <p><b>학과 특징</b><br>${department.name}은 ${department.field.join(", ")} 분야와 연결되는 학과입니다.</p>
           </div>
         `).join("");
     }
@@ -1019,8 +884,7 @@
           <div class="info-card">
             <span class="tag blue-tag">숨은 추천 학과</span>
             <h4>${department.name}</h4>
-            <p><b>왜 추천되나요?</b><br>
-            ${department.matched.join(", ") || analysis.keywords.join(", ")} 키워드와 연결되기 때문입니다.</p>
+            <p>${department.name}은 사용자가 처음에는 떠올리지 못했을 수 있지만, 관심 분야와 관련 직업을 함께 고려했을 때 충분히 탐색할 가치가 있는 학과입니다.</p>
             <p><b>연결 직업</b><br>${department.jobs}</p>
           </div>
         `).join("");
@@ -1041,7 +905,7 @@
         message = "희망 학과 기준보다 약간 높은 준비가 필요합니다.";
       } else {
         level = "상향 도전";
-        message = "바로 진학이 어렵다면 관련 학과를 통한 우회 경로를 고려할 수 있습니다.";
+        message = "바로 진학이 어렵다면 관련 학과를 통한 편입 또는 우회 경로를 고려할 수 있습니다.";
       }
 
       document.getElementById("dreamAnalysis").innerHTML = `
@@ -1060,38 +924,41 @@
       const dreamName = analysis.input.dreamMajor;
 
       document.getElementById("routeBox").innerHTML = `
-        <div class="mini-title">${dreamName}이 바로 어렵다면?</div>
+        <div class="mini-title">${dreamName} 진학을 위한 체계적 경로</div>
 
         <div class="route">
-          <h4>경로 1. 관련 전공 진학 후 편입 준비</h4>
+          <h4>1단계. 현실적인 관련 학과 진학</h4>
+          <p>현재 성적과 관심 분야를 고려하여 ${analysis.safe.name} 또는 ${analysis.match.name}처럼 희망 학과와 연결되는 학과를 우선 선택합니다.</p>
           <div class="route-line">
-            <span class="route-step">${analysis.safe.name}</span>
+            <span class="route-step">관련 학과 입학</span>
             <span class="arrow">→</span>
-            <span class="route-step">전공 기초 역량 강화</span>
+            <span class="route-step">기초 전공 학습</span>
             <span class="arrow">→</span>
-            <span class="route-step">${dreamName} 편입 준비</span>
+            <span class="route-step">학점 관리</span>
           </div>
         </div>
 
         <div class="route">
-          <h4>경로 2. 관련 산업 분야로 진출</h4>
+          <h4>2단계. 편입 준비 조건 만들기</h4>
+          <p>희망 학과와 관련된 과목을 수강하고, 학점·영어·전공 기초를 준비하여 편입 가능성을 높입니다.</p>
           <div class="route-line">
-            <span class="route-step">${analysis.match.name}</span>
+            <span class="route-step">전공 과목 수강</span>
             <span class="arrow">→</span>
-            <span class="route-step">연구·실험 경험</span>
+            <span class="route-step">평균 학점 관리</span>
             <span class="arrow">→</span>
-            <span class="route-step">${analysis.match.jobs}</span>
+            <span class="route-step">편입 시험·면접 준비</span>
           </div>
         </div>
 
         <div class="route">
-          <h4>경로 3. 대학원 또는 융합 전공 활용</h4>
+          <h4>3단계. 비교과 활동으로 진로 연결</h4>
+          <p>동아리, 탐구 보고서, 실험 활동, 관련 자격증 등을 통해 희망 학과와의 연결성을 강화합니다.</p>
           <div class="route-line">
-            <span class="route-step">${analysis.hidden[0]?.name || "관련 학과"}</span>
+            <span class="route-step">탐구 활동</span>
             <span class="arrow">→</span>
-            <span class="route-step">융합 전공·대학원</span>
+            <span class="route-step">관련 경험 축적</span>
             <span class="arrow">→</span>
-            <span class="route-step">희망 직업과 연결</span>
+            <span class="route-step">${dreamName} 또는 관련 직업 진출</span>
           </div>
         </div>
       `;
@@ -1102,7 +969,6 @@
 
       document.getElementById("roadmapBox").innerHTML = `
         <div class="mini-title">${major.name} 선택 시 진로 로드맵</div>
-
         <div class="route">
           <div class="route-line">
             <span class="route-step">1학년: ${major.roadmap[0]}</span>
@@ -1124,7 +990,7 @@
 
     function renderFinalResult() {
       document.getElementById("finalResult").innerHTML = `
-        <div class="mini-title">최종 AI 진로 설계 결과</div>
+        <div class="mini-title">진로설계상담 결과지</div>
 
         <div class="card-grid">
           ${recommendCard("추천 학과", analysis.match, "blue-tag")}
@@ -1136,28 +1002,28 @@
 
         <div class="info-card">
           <h4>숨은 추천 학과</h4>
-          <p>${analysis.hidden.map(d => d.name).join(", ")}</p>
+          <p>${analysis.hidden.map(d => d.name).join(", ") || "추가 추천 학과 없음"}</p>
         </div>
 
         <br>
 
         <div class="info-card">
-          <h4>희망 학과 우회 경로</h4>
+          <h4>편입·우회 경로 요약</h4>
           <p>
-            ${analysis.input.dreamMajor} 진학이 바로 어렵다면
-            ${analysis.safe.name} 또는 ${analysis.match.name}에서 관련 전공 역량을 쌓고,
-            편입·대학원·관련 산업 분야로 이어지는 경로를 고려할 수 있습니다.
+            ${analysis.input.dreamMajor} 진학이 바로 어렵다면 ${analysis.safe.name} 또는 ${analysis.match.name}에서
+            기초 전공 역량을 쌓고, 학점 관리·전공 기초·비교과 활동을 준비하여
+            편입 또는 관련 산업 분야로 이어지는 경로를 고려할 수 있습니다.
           </p>
         </div>
 
         <br>
 
         <div class="info-card">
-          <h4>차별화된 추천 이유</h4>
+          <h4>최종 상담 의견</h4>
           <p>
-            이 시스템은 단순히 성적에 맞는 학과만 추천하지 않고,
-            사용자의 관심 키워드, 희망 직업, 희망 학과, 성적 차이를 함께 분석해
-            대체 학과와 진로 루트까지 제안합니다.
+            이 결과는 단순히 성적에 맞는 학과만 제시하는 것이 아니라,
+            관심사와 희망 직업, 희망 학과, 성적 차이를 함께 고려하여
+            학생이 선택할 수 있는 다양한 진로 방향을 제안합니다.
           </p>
         </div>
       `;
@@ -1170,15 +1036,14 @@
           <h4>${department.name}</h4>
           <p><b>종합 적합도</b> ${department.total}%</p>
           <p><b>관련 직업</b><br>${department.jobs}</p>
-          <p><b>추천 이유</b><br>
-          ${department.matched.length ? department.matched.join(", ") : "입력 정보"}와 연결됩니다.</p>
+          <p><b>추천 이유</b><br>${makeReason(department, type)}</p>
         </div>
       `;
     }
 
     function nextStep() {
       if (step === 0) {
-        if (!collectInput()) return;
+        collectInput();
         makeAnalysis();
       }
 
@@ -1207,6 +1072,14 @@
       document.getElementById("feedbackText").textContent = "";
       updateScreen();
       document.getElementById("app").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function printResult() {
+      document.getElementById("finalScreen").classList.add("print-target");
+      window.print();
+      setTimeout(() => {
+        document.getElementById("finalScreen").classList.remove("print-target");
+      }, 500);
     }
 
     updateScreen();
