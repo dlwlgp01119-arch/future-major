@@ -3,531 +3,1128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>신호 기반 보행 경로 추천 앱</title>
+  <title>진로설계상담</title>
 
   <style>
     * {
       box-sizing: border-box;
-      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      background: #edf3ff;
-      color: #222;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      background: #f6f8fc;
+      color: #172033;
+      line-height: 1.6;
+      word-break: keep-all;
     }
 
-    .app {
-      max-width: 430px;
+    button, input, select {
+      font-family: inherit;
+    }
+
+    .hero {
       min-height: 100vh;
-      margin: 0 auto;
-      background: #f8fbff;
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .top {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 70px;
       align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .top h1 {
-      font-size: 22px;
-      margin: 0;
-      color: #1d5cff;
+      padding: 70px 9%;
+      background: linear-gradient(135deg, #eef6ff, #ffffff);
     }
 
     .badge {
-      background: #e7efff;
-      color: #1d5cff;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .search-card {
-      background: white;
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      margin-bottom: 14px;
-    }
-
-    .input-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 0;
-      border-bottom: 1px solid #eee;
+      display: inline-block;
+      background: #dbeafe;
+      color: #2563eb;
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-weight: 800;
       font-size: 14px;
+      margin-bottom: 22px;
     }
 
-    .input-row:last-child {
-      border-bottom: none;
+    h1 {
+      font-size: clamp(42px, 5vw, 66px);
+      line-height: 1.22;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
     }
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    h1 span {
+      color: #2563eb;
     }
 
-    .green { background: #22c55e; }
-    .red { background: #ef4444; }
-
-    .input-row input {
-      border: none;
-      outline: none;
-      width: 100%;
-      font-size: 14px;
-      background: transparent;
+    .nowrap {
+      white-space: nowrap;
     }
 
-    button {
-      width: 100%;
-      border: none;
-      padding: 13px;
-      border-radius: 14px;
-      background: #1d5cff;
+    .hero p {
+      font-size: 18px;
+      color: #52617a;
+      max-width: 760px;
+      margin-bottom: 32px;
+      line-height: 1.85;
+    }
+
+    .primary-btn, .next-btn {
+      border: 0;
+      background: #2563eb;
       color: white;
-      font-size: 15px;
-      font-weight: bold;
-      margin-top: 10px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 800;
       cursor: pointer;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
+    .primary-btn {
+      padding: 15px 28px;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
     }
 
-    .tab {
-      flex: 1;
-      text-align: center;
+    .visual {
       background: white;
-      border-radius: 13px;
-      padding: 10px 4px;
-      font-size: 13px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      border-radius: 32px;
+      padding: 30px;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.12);
     }
 
-    .tab strong {
-      color: #1d5cff;
-      font-size: 17px;
-      display: block;
-      margin-top: 3px;
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
     }
 
-    .tab.active {
-      background: #eaf1ff;
-      border: 2px solid #1d5cff;
-      font-weight: bold;
-    }
-
-    .map {
-      height: 420px;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px),
-        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
-        #eef3f7;
-      background-size: 55px 55px;
+    .job-card {
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
       border-radius: 22px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: inset 0 0 0 1px #dbe4ef;
-      margin-bottom: 14px;
-    }
-
-    .road {
-      position: absolute;
-      background: #ffffff;
-      border: 2px solid #d7dee8;
-      border-radius: 30px;
-    }
-
-    .road.r1 {
-      width: 520px;
-      height: 48px;
-      left: -50px;
-      top: 190px;
-      transform: rotate(-28deg);
-    }
-
-    .road.r2 {
-      width: 420px;
-      height: 46px;
-      left: 40px;
-      top: 190px;
-      transform: rotate(55deg);
-    }
-
-    .road.r3 {
-      width: 330px;
-      height: 42px;
-      left: 40px;
-      top: 85px;
-      transform: rotate(5deg);
-    }
-
-    .route-line {
-      position: absolute;
-      width: 250px;
-      height: 170px;
-      left: 82px;
-      top: 170px;
-      border-left: 7px solid #1d5cff;
-      border-bottom: 7px solid #1d5cff;
-      border-radius: 0 0 0 20px;
-    }
-
-    .route-line::after {
-      content: "";
-      position: absolute;
-      width: 145px;
-      height: 7px;
-      background: #1d5cff;
-      left: 0;
-      bottom: -7px;
-      transform: rotate(-32deg);
-      transform-origin: left center;
-      border-radius: 8px;
-    }
-
-    .user {
-      position: absolute;
-      left: 70px;
-      bottom: 62px;
-      width: 44px;
-      height: 44px;
-      background: #1d5cff;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 22px;
-      box-shadow: 0 4px 12px rgba(29,92,255,0.4);
-      z-index: 5;
-    }
-
-    .destination {
-      position: absolute;
-      right: 70px;
-      top: 80px;
-      font-size: 38px;
-      z-index: 5;
-    }
-
-    .signal-pin {
-      position: absolute;
-      background: #222;
-      color: white;
-      border-radius: 13px;
-      padding: 8px 10px;
-      font-size: 12px;
-      line-height: 1.35;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.22);
-      z-index: 6;
-    }
-
-    .signal-pin b {
-      color: #71ff9b;
-    }
-
-    .signal-light {
-      width: 18px;
-      height: 38px;
-      background: #333;
-      border-radius: 7px;
-      margin-top: 5px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      padding: 4px;
-    }
-
-    .light {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #555;
-    }
-
-    .light.on {
-      background: #22c55e;
-    }
-
-    .pin1 { left: 92px; top: 120px; }
-    .pin2 { left: 190px; top: 190px; }
-    .pin3 { right: 45px; top: 225px; }
-
-    .bottom-card {
-      background: white;
-      border-radius: 20px;
-      padding: 15px;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
-    }
-
-    .route-summary {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .summary-box {
-      flex: 1;
-      background: #f5f7fb;
-      border-radius: 15px;
-      padding: 12px;
+      padding: 23px;
       text-align: center;
-      font-size: 13px;
+      font-weight: 800;
     }
 
-    .summary-box.recommend {
-      background: #eaf1ff;
-      border: 2px solid #1d5cff;
-    }
-
-    .summary-box strong {
+    .job-card span {
       display: block;
-      font-size: 24px;
-      color: #1d5cff;
-      margin-top: 5px;
+      font-size: 42px;
+      margin-bottom: 8px;
     }
 
-    .saving {
-      background: #eef4ff;
-      color: #1d5cff;
+    .difference, .app {
+      padding: 80px 9%;
+    }
+
+    .difference {
+      background: white;
+    }
+
+    .section-title {
       text-align: center;
-      border-radius: 14px;
-      padding: 12px;
-      font-weight: bold;
+      margin-bottom: 36px;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
       margin-bottom: 10px;
     }
 
-    .info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      color: #444;
+    .section-title p {
+      color: #64748b;
+      line-height: 1.8;
     }
 
-    .detail-btn {
-      width: auto;
-      margin: 0;
-      padding: 8px 12px;
-      background: #f0f3f8;
-      color: #333;
-      font-size: 12px;
-    }
-
-    .feature-card {
-      background: white;
-      border-radius: 18px;
-      padding: 14px;
-      margin-top: 14px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
-    }
-
-    .feature-card h3 {
-      margin: 0 0 10px;
-      font-size: 16px;
-    }
-
-    .features {
+    .diff-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .diff-card, .info-card, .box, .route {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .diff-card h3 {
+      color: #2563eb;
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .diff-card p, .info-card p, .route p {
+      color: #52617a;
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .progress-wrap {
+      max-width: 1000px;
+      margin: 0 auto 28px;
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.07);
+    }
+
+    .progress-line {
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: #2563eb;
+      border-radius: 999px;
+      transition: 0.35s;
+    }
+
+    .progress-text {
+      font-weight: 800;
+      color: #2563eb;
+    }
+
+    .screen {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 30px;
+      padding: 38px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .screen h3 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      color: #64748b;
+      margin-bottom: 28px;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 15px;
+      padding: 15px 16px;
+      font-size: 16px;
+      background: white;
+    }
+
+    .box {
+      margin-top: 18px;
+    }
+
+    .mini-title {
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: #172033;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
       gap: 10px;
     }
 
-    .feature {
-      border-radius: 15px;
-      padding: 12px;
-      font-size: 12px;
-      line-height: 1.45;
+    .chip {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-weight: 800;
     }
 
-    .f1 { background: #ecfdf3; border: 1px solid #b7ebcc; }
-    .f2 { background: #fff8e6; border: 1px solid #f1d48a; }
-    .f3 { background: #edf4ff; border: 1px solid #b8cff8; }
-    .f4 { background: #f6efff; border: 1px solid #d8b8ff; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
 
-    .feature b {
-      display: block;
-      margin-bottom: 5px;
+    .info-card {
+      background: white;
+    }
+
+    .info-card h4, .route h4 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-weight: 900;
       font-size: 13px;
+      margin-bottom: 10px;
     }
 
-    .hidden {
-      display: none;
+    .blue-tag { background: #dbeafe; color: #1d4ed8; }
+    .green-tag { background: #dcfce7; color: #166534; }
+    .red-tag { background: #fee2e2; color: #991b1b; }
+    .yellow-tag { background: #fef3c7; color: #92400e; }
+
+    .bar {
+      height: 11px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: #2563eb;
+      border-radius: 999px;
+    }
+
+    .route {
+      background: white;
+      margin-bottom: 16px;
+    }
+
+    .route-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      font-weight: 800;
+    }
+
+    .route-step {
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+
+    .arrow {
+      color: #2563eb;
+      font-weight: 900;
+    }
+
+    .nav-btns {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .ghost-btn {
+      border: 1px solid #cbd5e1;
+      background: white;
+      color: #334155;
+      padding: 13px 22px;
+      border-radius: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .print-btn {
+      width: 100%;
+      margin-top: 25px;
+      border: 0;
+      background: #172033;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .feedbacks {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .feedbacks button {
+      border: 0;
+      background: #e0f2fe;
+      color: #0369a1;
+      border-radius: 14px;
+      padding: 14px 20px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .notice {
+      margin-top: 18px;
+      color: #2563eb;
+      font-weight: 900;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      background: #172033;
+      color: white;
+      margin-top: 50px;
+    }
+
+    @media print {
+      .hero, .difference, .progress-wrap, .nav-btns, .feedbacks, footer, .print-btn {
+        display: none !important;
+      }
+
+      .app {
+        padding: 20px;
+      }
+
+      .screen {
+        display: none !important;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .screen.print-target {
+        display: block !important;
+      }
+
+      body {
+        background: white;
+      }
+    }
+
+    @media(max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 55px 6%;
+      }
+
+      .difference, .app {
+        padding: 55px 6%;
+      }
+
+      .diff-grid, .form-grid, .card-grid, .job-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screen {
+        padding: 28px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="top">
-      <h1>🚦 신호 길잡이</h1>
-      <div class="badge">보행자용</div>
+  <section class="hero">
+    <div>
+      <div class="badge">AI 기반 진로 설계 플랫폼</div>
+
+      <h1>
+        진로설계상담<br>
+        <span>학과 추천부터</span><br>
+        <span class="nowrap">진로 루트까지</span>
+      </h1>
+
+      <p>
+        관심사, 성적, 희망 직업을 바탕으로 학과를 추천하고,
+        희망 학과가 어려울 경우 편입·우회 경로와 연결 직업까지 제안합니다.
+      </p>
+
+      <button class="primary-btn" onclick="startApp()">추천 시작하기</button>
     </div>
 
-    <div class="search-card">
-      <div class="input-row">
-        <span class="dot green"></span>
-        <input type="text" value="현재 위치  한밭대학교" />
-      </div>
-      <div class="input-row">
-        <span class="dot red"></span>
-        <input type="text" value="도착지  대전역" />
-      </div>
-      <button onclick="startApp()">신호 기반 경로 추천하기</button>
-    </div>
-
-    <div class="tabs">
-      <div class="tab active">
-        추천 경로
-        <strong>18분</strong>
-      </div>
-      <div class="tab">
-        최단 거리
-        <strong>22분</strong>
-      </div>
-      <div class="tab">
-        최소 도보
-        <strong>20분</strong>
+    <div class="visual">
+      <div class="job-grid">
+        <div class="job-card"><span>👩‍⚕️</span>의료·보건</div>
+        <div class="job-card"><span>👨‍🏫</span>교육</div>
+        <div class="job-card"><span>👩‍💻</span>IT·코딩</div>
+        <div class="job-card"><span>🎨</span>디자인</div>
+        <div class="job-card"><span>🔬</span>연구</div>
+        <div class="job-card"><span>⚙️</span>공학</div>
       </div>
     </div>
+  </section>
 
-    <div class="map">
-      <div class="road r1"></div>
-      <div class="road r2"></div>
-      <div class="road r3"></div>
-
-      <div class="route-line"></div>
-
-      <div class="user">🚶</div>
-      <div class="destination">📍</div>
-
-      <div class="signal-pin pin1">
-        <span id="pin1Text">다음 신호 방향<br><b>직진</b></span>
-        <div class="signal-light">
-          <div class="light"></div>
-          <div class="light on"></div>
-          <div class="light"></div>
-        </div>
-      </div>
-
-      <div class="signal-pin pin2">
-        <span id="pin2Text">25초 후<br><b>초록불</b><br>다음 신호 방향 ↑</span>
-        <div class="signal-light">
-          <div class="light"></div>
-          <div class="light on"></div>
-          <div class="light"></div>
-        </div>
-      </div>
-
-      <div class="signal-pin pin3">
-        <span id="pin3Text">35초 후<br><b>초록불</b><br>꺾은길 방향 →</span>
-        <div class="signal-light">
-          <div class="light"></div>
-          <div class="light on"></div>
-          <div class="light"></div>
-        </div>
-      </div>
+  <section class="difference">
+    <div class="section-title">
+      <h2>기존 진로 사이트와 무엇이 다를까요?</h2>
+      <p>단순 추천이 아니라, 성적 차이를 고려한 우회 경로와 진로 연결까지 제공합니다.</p>
     </div>
 
-    <div class="bottom-card">
-      <div class="route-summary">
-        <div class="summary-box recommend">
-          추천 경로
-          <strong>18분</strong>
-          1.2km
-        </div>
-
-        <div class="summary-box">
-          최단거리 경로
-          <strong>22분</strong>
-          1.1km
-        </div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <h3>01. 추천 이유 설명</h3>
+        <p>학과가 추천된 이유를 문장형으로 설명합니다.</p>
       </div>
-
-      <div class="saving" id="savingText">
-        대기 시간 4분 절약 🪽
+      <div class="diff-card">
+        <h3>02. 숨은 학과 발견</h3>
+        <p>학생이 몰랐을 수 있는 관련 학과를 함께 제안합니다.</p>
       </div>
-
-      <div class="info">
-        <span>🚶 횡단 2회 | 신호 대기 1회 포함</span>
-        <button class="detail-btn" onclick="toggleFeature()">상세 기능</button>
+      <div class="diff-card">
+        <h3>03. 편입·우회 경로</h3>
+        <p>희망 학과가 어렵더라도 포기하지 않도록 대체 경로를 제시합니다.</p>
+      </div>
+      <div class="diff-card">
+        <h3>04. 결과지 출력</h3>
+        <p>상담 결과를 출력하여 진로 상담 자료로 활용할 수 있습니다.</p>
       </div>
     </div>
+  </section>
 
-    <div class="feature-card hidden" id="featureCard">
-      <h3>프로토타입 구성 요소</h3>
+  <section class="app" id="app">
+    <div class="section-title">
+      <h2>진로설계상담 실행하기</h2>
+      <p>입력란은 비워도 진행 가능하며, 입력값이 없을 경우 기본 추천 기준으로 분석됩니다.</p>
+    </div>
 
-      <div class="features">
-        <div class="feature f1">
-          <b>1. 신호 순서 안내</b>
-          다음 초록불 방향과 교차로 신호 흐름 제공
+    <div class="progress-wrap">
+      <div class="progress-line">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-text" id="progressText"></div>
+    </div>
+
+    <section class="screen active">
+      <span class="step-badge">STEP 1</span>
+      <h3>사용자 정보 입력</h3>
+      <p class="desc">입력하지 않아도 다음 단계로 넘어갈 수 있습니다.</p>
+
+      <div class="form-grid">
+        <div>
+          <label>관심 분야</label>
+          <input id="interest" placeholder="예: 생명, 식품, 코딩, 교육, 디자인">
         </div>
 
-        <div class="feature f2">
-          <b>2. 예상 대기 시간</b>
-          횡단보도별 남은 시간과 대기 시간 예측
+        <div>
+          <label>좋아하는 과목</label>
+          <input id="subject" placeholder="예: 생명과학, 화학, 수학, 미술">
         </div>
 
-        <div class="feature f3">
-          <b>3. 최적 경로 추천</b>
-          신호 대기 시간을 반영한 빠른 경로 제공
+        <div>
+          <label>희망 직업</label>
+          <input id="job" placeholder="예: 약사, 개발자, 교사, 디자이너">
         </div>
 
-        <div class="feature f4">
-          <b>4. 절약 시간 비교</b>
-          기존 경로와 추천 경로의 이동 시간 비교
+        <div>
+          <label>가고 싶은 학과</label>
+          <input id="dreamMajor" placeholder="예: 약학과, 컴퓨터공학과, 사범대">
+        </div>
+
+        <div>
+          <label>현재 성적 등급</label>
+          <select id="grade">
+            <option value="">선택하지 않음</option>
+            <option value="1">1등급</option>
+            <option value="2">2등급</option>
+            <option value="3">3등급</option>
+            <option value="4">4등급</option>
+            <option value="5">5등급 이하</option>
+          </select>
         </div>
       </div>
-    </div>
-  </div>
+
+      <div class="nav-btns">
+        <button class="ghost-btn" disabled>이전</button>
+        <button class="next-btn" onclick="nextStep()">AI 분석 시작</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 2</span>
+      <h3>AI 입력 데이터 분석</h3>
+      <p class="desc">입력 정보를 저장하고 핵심 키워드를 추출합니다.</p>
+      <div class="box" id="savedData"></div>
+      <div class="box">
+        <div class="mini-title">추출된 관심 키워드</div>
+        <div class="chips" id="keywordChips"></div>
+      </div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">학과 데이터와 비교</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 3</span>
+      <h3>학과 데이터와 비교</h3>
+      <p class="desc">학과별 과목, 직업, 성적 기준과 비교합니다.</p>
+      <div class="box">
+        <div class="card-grid" id="compareList"></div>
+      </div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">적합도 계산</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 4</span>
+      <h3>적합도 점수 계산</h3>
+      <p class="desc">관심도 점수, 성적 기준 점수, 종합 적합도를 함께 계산합니다.</p>
+      <div class="box" id="scoreBox"></div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">추천 학과 보기</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 5</span>
+      <h3>학과 추천 결과</h3>
+      <p class="desc">안정 지원, 적정 지원, 도전 지원 학과를 중복 없이 분류합니다.</p>
+      <div class="box">
+        <div class="card-grid" id="recommendCards"></div>
+      </div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">숨은 학과 보기</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 6</span>
+      <h3>이런 학과도 있어요</h3>
+      <p class="desc">사용자가 몰랐을 수 있는 관련 학과를 추가로 추천합니다.</p>
+      <div class="box">
+        <div class="card-grid" id="hiddenMajors"></div>
+      </div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">희망 학과 가능성 보기</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 7</span>
+      <h3>희망 학과 가능성 분석</h3>
+      <p class="desc">가고 싶은 학과와 현재 성적을 비교합니다.</p>
+      <div class="box" id="dreamAnalysis"></div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">편입·우회 경로 보기</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 8</span>
+      <h3>체계적인 편입·우회 진학 경로</h3>
+      <p class="desc">희망 학과가 어렵더라도 단계별 준비 경로를 확인할 수 있습니다.</p>
+      <div class="box" id="routeBox"></div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">진로 로드맵 보기</button>
+      </div>
+    </section>
+
+    <section class="screen">
+      <span class="step-badge">STEP 9</span>
+      <h3>진로 로드맵</h3>
+      <p class="desc">추천 학과를 선택했을 때 이어질 수 있는 준비 과정과 직업 루트를 보여줍니다.</p>
+      <div class="box" id="roadmapBox"></div>
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="nextStep()">최종 결과 보기</button>
+      </div>
+    </section>
+
+    <section class="screen" id="finalScreen">
+      <span class="step-badge">STEP 10</span>
+      <h3>최종 결과 및 피드백</h3>
+      <p class="desc">상담 결과를 확인하고 결과지를 출력할 수 있습니다.</p>
+
+      <div class="box" id="finalResult"></div>
+
+      <button class="print-btn" onclick="printResult()">결과지 출력하기</button>
+
+      <div class="feedbacks">
+        <button onclick="saveFeedback('만족')">만족</button>
+        <button onclick="saveFeedback('보통')">보통</button>
+        <button onclick="saveFeedback('불만족')">불만족</button>
+      </div>
+
+      <p class="notice" id="feedbackText"></p>
+
+      <div class="nav-btns">
+        <button class="ghost-btn" onclick="prevStep()">이전</button>
+        <button class="next-btn" onclick="restart()">처음부터 다시 시작</button>
+      </div>
+    </section>
+  </section>
+
+  <footer>
+    진로설계상담 | AI 기반 진로 설계 플랫폼
+  </footer>
 
   <script>
-    let seconds = 25;
-    let running = false;
-    let timer;
+    const screens = document.querySelectorAll(".screen");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+
+    const titles = [
+      "사용자 정보 입력",
+      "AI 입력 데이터 분석",
+      "학과 데이터와 비교",
+      "적합도 점수 계산",
+      "학과 추천 결과",
+      "숨은 학과 발견",
+      "희망 학과 가능성 분석",
+      "편입·우회 진학 경로",
+      "진로 로드맵",
+      "최종 결과 및 피드백"
+    ];
+
+    let step = 0;
+    let analysis = {};
+
+    const departments = [
+      { name: "약학과", field: ["생명", "화학", "보건", "약사", "제약"], jobs: "약사, 제약 연구원, 신약 개발 연구원", cut: 1, hidden: false, roadmap: ["화학·생명 기초 학습", "약학 관련 탐구", "실험·연구 경험", "약사 또는 제약 연구 분야"] },
+      { name: "생명공학과", field: ["생명", "화학", "연구", "식품", "바이오"], jobs: "바이오 연구원, 생명과학 연구원, 제약 연구원", cut: 2, hidden: false, roadmap: ["생명과학 기초", "실험 수업·연구실 경험", "바이오 인턴·탐구", "바이오·제약 연구 분야"] },
+      { name: "식품영양학과", field: ["식품", "생명", "화학", "보건", "영양"], jobs: "영양사, 식품연구원, 품질관리 전문가", cut: 3, hidden: false, roadmap: ["식품·영양 기초", "식품 분석 실험", "품질관리·영양 관련 실습", "식품 연구·보건 분야"] },
+      { name: "화학공학과", field: ["화학", "공학", "제약", "소재", "연구"], jobs: "화학 공정 엔지니어, 제약 생산관리, 소재 연구원", cut: 2, hidden: true, roadmap: ["화학·수학 기초", "공정·실험 과목", "제약·소재 인턴", "제약 공정·연구 개발"] },
+      { name: "의생명공학과", field: ["생명", "의료", "보건", "바이오", "연구"], jobs: "의생명 연구원, 의료기기 연구원, 바이오 연구원", cut: 2, hidden: true, roadmap: ["생명·의학 기초", "바이오 실험", "의료 데이터·연구 경험", "의생명 연구 분야"] },
+      { name: "컴퓨터공학과", field: ["코딩", "컴퓨터", "개발", "수학", "AI"], jobs: "개발자, 데이터 분석가, 인공지능 연구원", cut: 2, hidden: false, roadmap: ["프로그래밍 기초", "프로젝트 제작", "인턴·포트폴리오", "개발자·AI 분야"] },
+      { name: "기술교육과", field: ["교육", "교사", "공학", "기술", "수업"], jobs: "기술교사, 교육 콘텐츠 개발자, 진로교육 전문가", cut: 3, hidden: false, roadmap: ["교육학·기술 기초", "수업 설계", "교생 실습", "기술교사·교육 분야"] },
+      { name: "산업디자인학과", field: ["디자인", "미술", "창의", "기획", "제품"], jobs: "제품 디자이너, UX/UI 기획자, 콘텐츠 디자이너", cut: 3, hidden: false, roadmap: ["디자인 기초", "포트폴리오 제작", "공모전·프로젝트", "디자이너·기획자"] },
+      { name: "바이오융합학과", field: ["생명", "바이오", "식품", "데이터", "연구"], jobs: "바이오 데이터 분석가, 융합 연구원, 헬스케어 기획자", cut: 3, hidden: true, roadmap: ["생명과학 기초", "데이터·바이오 융합", "헬스케어 프로젝트", "바이오 융합 분야"] }
+    ];
 
     function startApp() {
-      if (running) return;
-      running = true;
+      document.getElementById("app").scrollIntoView({ behavior: "smooth" });
+    }
 
-      timer = setInterval(() => {
-        seconds--;
+    function updateScreen() {
+      screens.forEach((screen, index) => {
+        screen.classList.toggle("active", index === step);
+      });
 
-        if (seconds <= 0) {
-          seconds = 35;
+      progressBar.style.width = ((step / (screens.length - 1)) * 100) + "%";
+      progressText.textContent = `${step + 1} / ${screens.length}  ${titles[step]}`;
+    }
+
+    function collectInput() {
+      const interest = document.getElementById("interest").value.trim() || "진로 탐색";
+      const subject = document.getElementById("subject").value.trim() || "관심 과목 미정";
+      const job = document.getElementById("job").value.trim() || "희망 직업 미정";
+      const dreamMajor = document.getElementById("dreamMajor").value.trim() || "희망 학과 미정";
+      const grade = document.getElementById("grade").value || "3";
+
+      analysis.input = {
+        interest,
+        subject,
+        job,
+        dreamMajor,
+        grade: Number(grade)
+      };
+
+      return true;
+    }
+
+    function makeAnalysis() {
+      const text = `${analysis.input.interest} ${analysis.input.subject} ${analysis.input.job} ${analysis.input.dreamMajor}`;
+
+      const possibleKeywords = ["생명", "식품", "코딩", "교육", "디자인", "화학", "수학", "보건", "약사", "교사", "개발", "컴퓨터", "미술", "공학", "연구", "제약", "바이오", "의료", "AI", "영양"];
+
+      let keywords = possibleKeywords.filter(keyword => text.includes(keyword));
+
+      if (keywords.length === 0) {
+        keywords = ["진로 탐색", "학과 비교", "직업 연결"];
+      }
+
+      analysis.keywords = keywords;
+
+      analysis.results = departments.map(department => {
+        const matched = department.field.filter(keyword =>
+          keywords.some(userKeyword =>
+            keyword.includes(userKeyword) || userKeyword.includes(keyword)
+          )
+        );
+
+        const dreamBonus = analysis.input.dreamMajor.includes(department.name.replace("과", "")) ? 15 : 0;
+        const interestScore = Math.min(100, 50 + matched.length * 13 + dreamBonus);
+        const gradeGap = analysis.input.grade - department.cut;
+
+        let gradeScore;
+
+        if (gradeGap <= -1) gradeScore = 96;
+        else if (gradeGap === 0) gradeScore = 88;
+        else if (gradeGap === 1) gradeScore = 75;
+        else if (gradeGap === 2) gradeScore = 62;
+        else gradeScore = 50;
+
+        const total = Math.round(interestScore * 0.62 + gradeScore * 0.38);
+
+        const balanceGap =
+          Math.abs(interestScore - gradeScore) +
+          Math.abs(interestScore - total) +
+          Math.abs(gradeScore - total);
+
+        return {
+          ...department,
+          matched,
+          interestScore,
+          gradeScore,
+          total,
+          gradeGap,
+          balanceGap
+        };
+      }).sort((a, b) => b.total - a.total);
+
+      const selected = [];
+
+      const balancedResults = [...analysis.results].sort((a, b) => {
+        if (a.balanceGap === b.balanceGap) {
+          return b.total - a.total;
         }
+        return a.balanceGap - b.balanceGap;
+      });
 
-        document.getElementById("pin2Text").innerHTML =
-          seconds + "초 후<br><b>초록불</b><br>다음 신호 방향 ↑";
+      analysis.safe = balancedResults[0];
+      selected.push(analysis.safe.name);
 
-        document.getElementById("pin3Text").innerHTML =
-          (seconds + 10) + "초 후<br><b>초록불</b><br>꺾은길 방향 →";
+      analysis.match =
+        analysis.results.find(d => !selected.includes(d.name))
+        || analysis.results[1];
+      selected.push(analysis.match.name);
 
-        let saved = Math.max(1, Math.floor(seconds / 8));
-        document.getElementById("savingText").innerText =
-          "대기 시간 " + saved + "분 절약 🪽";
-      }, 1000);
+      analysis.challenge =
+        analysis.results.find(d => d.gradeGap > 0 && !selected.includes(d.name))
+        || analysis.results.find(d => !selected.includes(d.name));
+      selected.push(analysis.challenge.name);
+
+      analysis.hidden = analysis.results.filter(d => d.hidden && !selected.includes(d.name)).slice(0, 3);
+
+      analysis.dream =
+        departments.find(d => analysis.input.dreamMajor.includes(d.name.replace("과", "")))
+        || departments.find(d => d.name.includes(analysis.input.dreamMajor))
+        || analysis.challenge;
     }
 
-    function toggleFeature() {
-      const card = document.getElementById("featureCard");
-      card.classList.toggle("hidden");
+    function renderStep() {
+      if (step === 1) {
+        renderSavedData();
+        renderKeywords();
+      }
+      if (step === 2) renderCompareList();
+      if (step === 3) renderScores();
+      if (step === 4) renderRecommendCards();
+      if (step === 5) renderHiddenMajors();
+      if (step === 6) renderDreamAnalysis();
+      if (step === 7) renderRoutes();
+      if (step === 8) renderRoadmap();
+      if (step === 9) renderFinalResult();
     }
+
+    function makeReason(department, type) {
+      if (type === "안정 지원") {
+        return `${department.name}은 관심도 점수, 성적 기준 점수, 종합 적합도가 비교적 균형 있게 나타난 학과입니다. 현재 성적과 진로 방향을 함께 고려했을 때 안정적으로 탐색할 수 있는 선택지입니다.`;
+      }
+
+      if (type === "적정 지원" || type === "추천 학과") {
+        return `${department.name}은 입력한 관심 분야와 희망 직업이 학과의 주요 학습 내용과 잘 연결됩니다. 관련 직업으로는 ${department.jobs} 등이 있어 현재 진로 방향과 잘 맞는 학과로 분석되었습니다.`;
+      }
+
+      if (type === "도전 지원") {
+        return `${department.name}은 현재 성적 기준에서는 다소 도전적인 학과입니다. 하지만 희망 직업과의 관련성이 높기 때문에 성적 향상이나 관련 활동을 보완한다면 목표 학과로 설정해볼 수 있습니다.`;
+      }
+
+      return `${department.name}은 사용자의 관심사와 진로 방향을 함께 고려했을 때 관련성이 있는 학과입니다.`;
+    }
+
+    function renderSavedData() {
+      const input = analysis.input;
+
+      document.getElementById("savedData").innerHTML = `
+        <div class="mini-title">저장된 사용자 정보</div>
+        <p><b>관심 분야</b> ${input.interest}</p>
+        <p><b>좋아하는 과목</b> ${input.subject}</p>
+        <p><b>희망 직업</b> ${input.job}</p>
+        <p><b>가고 싶은 학과</b> ${input.dreamMajor}</p>
+        <p><b>현재 성적</b> ${input.grade}등급</p>
+      `;
+    }
+
+    function renderKeywords() {
+      document.getElementById("keywordChips").innerHTML =
+        analysis.keywords.map(keyword => `<span class="chip">${keyword}</span>`).join("");
+    }
+
+    function renderCompareList() {
+      document.getElementById("compareList").innerHTML =
+        analysis.results.slice(0, 6).map(department => `
+          <div class="info-card">
+            <h4>${department.name}</h4>
+            <p><b>관련 직업</b><br>${department.jobs}</p>
+            <p><b>학과 특징</b><br>${department.name}은 ${department.field.join(", ")} 분야와 연결되는 학과입니다.</p>
+          </div>
+        `).join("");
+    }
+
+    function renderScores() {
+      document.getElementById("scoreBox").innerHTML =
+        analysis.results.slice(0, 5).map(department => `
+          <div>
+            <p><b>${department.name}</b></p>
+            <p>관심도 점수 ${department.interestScore}점</p>
+            <div class="bar"><span style="width:${department.interestScore}%"></span></div>
+            <p>성적 기준 점수 ${department.gradeScore}점</p>
+            <div class="bar"><span style="width:${department.gradeScore}%"></span></div>
+            <p>종합 적합도 ${department.total}%</p>
+            <div class="bar"><span style="width:${department.total}%"></span></div>
+          </div>
+          <br>
+        `).join("");
+    }
+
+    function renderRecommendCards() {
+      document.getElementById("recommendCards").innerHTML = `
+        ${recommendCard("안정 지원", analysis.safe, "green-tag")}
+        ${recommendCard("적정 지원", analysis.match, "blue-tag")}
+        ${recommendCard("도전 지원", analysis.challenge, "red-tag")}
+      `;
+    }
+
+    function renderHiddenMajors() {
+      document.getElementById("hiddenMajors").innerHTML =
+        analysis.hidden.map(department => `
+          <div class="info-card">
+            <span class="tag blue-tag">숨은 추천 학과</span>
+            <h4>${department.name}</h4>
+            <p>${department.name}은 사용자가 처음에는 떠올리지 못했을 수 있지만, 관심 분야와 관련 직업을 함께 고려했을 때 충분히 탐색할 가치가 있는 학과입니다.</p>
+            <p><b>연결 직업</b><br>${department.jobs}</p>
+          </div>
+        `).join("");
+    }
+
+    function renderDreamAnalysis() {
+      const dream = analysis.dream;
+      const gap = analysis.input.grade - dream.cut;
+
+      let level = "적정";
+      let message = "현재 성적과 희망 학과 기준이 비교적 잘 맞습니다.";
+
+      if (gap <= 0) {
+        level = "적정 또는 안정";
+        message = "현재 성적으로 충분히 도전해볼 수 있는 수준입니다.";
+      } else if (gap === 1) {
+        level = "도전";
+        message = "희망 학과 기준보다 약간 높은 준비가 필요합니다.";
+      } else {
+        level = "상향 도전";
+        message = "바로 진학이 어렵다면 관련 학과를 통한 편입 또는 우회 경로를 고려할 수 있습니다.";
+      }
+
+      document.getElementById("dreamAnalysis").innerHTML = `
+        <div class="mini-title">희망 학과 분석</div>
+        <div class="info-card">
+          <h4>${analysis.input.dreamMajor}</h4>
+          <p><b>현재 성적</b> ${analysis.input.grade}등급</p>
+          <p><b>예상 기준</b> ${dream.cut}등급 내외</p>
+          <p><b>지원 가능성</b> ${level}</p>
+          <p><b>분석 결과</b> ${message}</p>
+        </div>
+      `;
+    }
+
+    function renderRoutes() {
+      const dreamName = analysis.input.dreamMajor;
+
+      document.getElementById("routeBox").innerHTML = `
+        <div class="mini-title">${dreamName} 진학을 위한 체계적 경로</div>
+
+        <div class="route">
+          <h4>1단계. 현실적인 관련 학과 진학</h4>
+          <p>현재 성적과 관심 분야를 고려하여 ${analysis.safe.name} 또는 ${analysis.match.name}처럼 희망 학과와 연결되는 학과를 우선 선택합니다.</p>
+          <div class="route-line">
+            <span class="route-step">관련 학과 입학</span>
+            <span class="arrow">→</span>
+            <span class="route-step">기초 전공 학습</span>
+            <span class="arrow">→</span>
+            <span class="route-step">학점 관리</span>
+          </div>
+        </div>
+
+        <div class="route">
+          <h4>2단계. 편입 준비 조건 만들기</h4>
+          <p>희망 학과와 관련된 과목을 수강하고, 학점·영어·전공 기초를 준비하여 편입 가능성을 높입니다.</p>
+          <div class="route-line">
+            <span class="route-step">전공 과목 수강</span>
+            <span class="arrow">→</span>
+            <span class="route-step">평균 학점 관리</span>
+            <span class="arrow">→</span>
+            <span class="route-step">편입 시험·면접 준비</span>
+          </div>
+        </div>
+
+        <div class="route">
+          <h4>3단계. 비교과 활동으로 진로 연결</h4>
+          <p>동아리, 탐구 보고서, 실험 활동, 관련 자격증 등을 통해 희망 학과와의 연결성을 강화합니다.</p>
+          <div class="route-line">
+            <span class="route-step">탐구 활동</span>
+            <span class="arrow">→</span>
+            <span class="route-step">관련 경험 축적</span>
+            <span class="arrow">→</span>
+            <span class="route-step">${dreamName} 또는 관련 직업 진출</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderRoadmap() {
+      const major = analysis.match;
+
+      document.getElementById("roadmapBox").innerHTML = `
+        <div class="mini-title">${major.name} 선택 시 진로 로드맵</div>
+        <div class="route">
+          <div class="route-line">
+            <span class="route-step">1학년: ${major.roadmap[0]}</span>
+            <span class="arrow">→</span>
+            <span class="route-step">2학년: ${major.roadmap[1]}</span>
+            <span class="arrow">→</span>
+            <span class="route-step">3학년: ${major.roadmap[2]}</span>
+            <span class="arrow">→</span>
+            <span class="route-step">졸업 후: ${major.roadmap[3]}</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h4>연결 직업</h4>
+          <p>${major.jobs}</p>
+        </div>
+      `;
+    }
+
+    function renderFinalResult() {
+      document.getElementById("finalResult").innerHTML = `
+        <div class="mini-title">진로설계상담 결과지</div>
+
+        <div class="card-grid">
+          ${recommendCard("추천 학과", analysis.match, "blue-tag")}
+          ${recommendCard("안정 지원", analysis.safe, "green-tag")}
+          ${recommendCard("도전 지원", analysis.challenge, "red-tag")}
+        </div>
+
+        <br>
+
+        <div class="info-card">
+          <h4>숨은 추천 학과</h4>
+          <p>${analysis.hidden.map(d => d.name).join(", ") || "추가 추천 학과 없음"}</p>
+        </div>
+
+        <br>
+
+        <div class="info-card">
+          <h4>편입·우회 경로 요약</h4>
+          <p>
+            ${analysis.input.dreamMajor} 진학이 바로 어렵다면 ${analysis.safe.name} 또는 ${analysis.match.name}에서
+            기초 전공 역량을 쌓고, 학점 관리·전공 기초·비교과 활동을 준비하여
+            편입 또는 관련 산업 분야로 이어지는 경로를 고려할 수 있습니다.
+          </p>
+        </div>
+
+        <br>
+
+        <div class="info-card">
+          <h4>최종 상담 의견</h4>
+          <p>
+            이 결과는 단순히 성적에 맞는 학과만 제시하는 것이 아니라,
+            관심사와 희망 직업, 희망 학과, 성적 차이를 함께 고려하여
+            학생이 선택할 수 있는 다양한 진로 방향을 제안합니다.
+          </p>
+        </div>
+      `;
+    }
+
+    function recommendCard(type, department, tagClass) {
+      return `
+        <div class="info-card">
+          <span class="tag ${tagClass}">${type}</span>
+          <h4>${department.name}</h4>
+          <p><b>관심도 점수</b> ${department.interestScore}점</p>
+          <p><b>성적 기준 점수</b> ${department.gradeScore}점</p>
+          <p><b>종합 적합도</b> ${department.total}%</p>
+          <p><b>관련 직업</b><br>${department.jobs}</p>
+          <p><b>추천 이유</b><br>${makeReason(department, type)}</p>
+        </div>
+      `;
+    }
+
+    function nextStep() {
+      if (step === 0) {
+        collectInput();
+        makeAnalysis();
+      }
+
+      if (step < screens.length - 1) {
+        step++;
+        renderStep();
+        updateScreen();
+        document.getElementById("app").scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    function prevStep() {
+      if (step > 0) {
+        step--;
+        updateScreen();
+      }
+    }
+
+    function saveFeedback(value) {
+      document.getElementById("feedbackText").textContent =
+        `${value} 피드백이 저장되었습니다. 추천 기준 개선에 활용됩니다.`;
+    }
+
+    function restart() {
+      step = 0;
+      document.getElementById("feedbackText").textContent = "";
+      updateScreen();
+      document.getElementById("app").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function printResult() {
+      document.getElementById("finalScreen").classList.add("print-target");
+      window.print();
+      setTimeout(() => {
+        document.getElementById("finalScreen").classList.remove("print-target");
+      }, 500);
+    }
+
+    updateScreen();
   </script>
 </body>
 </html>
